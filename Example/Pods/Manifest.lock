@@ -1,0 +1,16 @@
+PODS:
+  - ANPlayerController (0.1.0)
+
+DEPENDENCIES:
+  - ANPlayerController (from `../`)
+
+EXTERNAL SOURCES:
+  ANPlayerController:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ANPlayerController: 92ffa789e2d27a433e353acaffa8b9fef437e2df
+
+PODFILE CHECKSUM: d653c61e0a6490139356bc3b17db212beb695263
+
+COCOAPODS: 1.0.1

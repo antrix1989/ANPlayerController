@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'ANPlayerController_Example' do
+  pod 'ANPlayerController', :path => '../'
+
+  target 'ANPlayerController_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

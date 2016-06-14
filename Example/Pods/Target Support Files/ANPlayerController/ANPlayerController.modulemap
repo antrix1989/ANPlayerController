@@ -1,0 +1,6 @@
+framework module ANPlayerController {
+  umbrella header "ANPlayerController-umbrella.h"
+
+  export *
+  module * { export * }
+}
