@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="a8l-T2-V0f">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="zUt-gn-3fO">
+            <objects>
+                <navigationController id="a8l-T2-V0f" sceneMemberID="viewController">
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="480"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qYB-KT-Wbp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="XkU-rP-G9a"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ViW-8I-GfQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-100" y="303"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
@@ -18,20 +36,34 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4P-tv-phu">
-                                <rect key="frame" x="40" y="32" width="240" height="128"/>
+                                <rect key="frame" x="40" y="76" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="MUC-NJ-ewY"/>
                                     <constraint firstAttribute="width" constant="240" id="wfO-YE-kZR"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyc-0d-zQT">
+                                <rect key="frame" x="40" y="269" width="240" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="hTK-Of-fFX"/>
+                                </constraints>
+                                <state key="normal" title="Feed Table View"/>
+                                <connections>
+                                    <segue destination="zeS-AD-H6A" kind="push" id="zUB-7r-KCA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="uyc-0d-zQT" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="40" id="0Cu-h0-H67"/>
+                            <constraint firstItem="uyc-0d-zQT" firstAttribute="top" secondItem="O4P-tv-phu" secondAttribute="bottom" constant="65" id="7Cg-Qa-0Vq"/>
+                            <constraint firstAttribute="trailing" secondItem="uyc-0d-zQT" secondAttribute="trailing" constant="40" id="7n4-cK-Sgx"/>
                             <constraint firstItem="O4P-tv-phu" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="j8M-ti-0ME"/>
                             <constraint firstItem="O4P-tv-phu" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="12" id="r0t-wf-BG0"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="J3E-6z-tQq"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="480"/>
                     <connections>
@@ -40,6 +72,53 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="353" y="303"/>
+        </scene>
+        <!--Feed Table View Table View Controller-->
+        <scene sceneID="mf5-Gj-p09">
+            <objects>
+                <tableViewController storyboardIdentifier="ANFeedTableViewTableViewController" id="zeS-AD-H6A" customClass="ANFeedTableViewTableViewController" customModule="ANPlayerController_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="200" sectionHeaderHeight="28" sectionFooterHeight="28" id="bpV-Rg-IXX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ANVideoTableViewCell" id="BUW-hg-9h2" customClass="ANVideoTableViewCell" customModule="ANPlayerController_Example" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="320" height="200"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BUW-hg-9h2" id="cF6-57-hfT">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xlU-y5-Mi1">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="xlU-y5-Mi1" firstAttribute="leading" secondItem="cF6-57-hfT" secondAttribute="leading" id="TKL-JZ-Ug8"/>
+                                        <constraint firstAttribute="bottom" secondItem="xlU-y5-Mi1" secondAttribute="bottom" id="VFd-dD-ABp"/>
+                                        <constraint firstItem="xlU-y5-Mi1" firstAttribute="top" secondItem="cF6-57-hfT" secondAttribute="top" id="dRX-gE-Cxa"/>
+                                        <constraint firstAttribute="trailing" secondItem="xlU-y5-Mi1" secondAttribute="trailing" id="tGt-ZZ-6YD"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="videoContainerView" destination="xlU-y5-Mi1" id="PGs-Yz-TtA"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="zeS-AD-H6A" id="gJz-2H-QBS"/>
+                            <outlet property="delegate" destination="zeS-AD-H6A" id="1ik-EQ-ukO"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="bDd-wn-Mbg"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="480"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TqN-CF-UYs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="755" y="303"/>
         </scene>
     </scenes>
 </document>

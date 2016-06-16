@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import SnapKit
 
 public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaPlayback
 {
@@ -17,11 +18,13 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     public lazy var view: UIView = ({
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 160))
         view.backgroundColor = UIColor.blackColor()
-        self.activityIndicatorView.center = view.center
         self.activityIndicatorView.hidesWhenStopped = true
         view.addSubview(self.activityIndicatorView)
+        self.activityIndicatorView.snp_makeConstraints { (make) -> Void in
+            make.center.equalTo(view.snp_center)
+        }
         
-        view.addObserver(self, forKeyPath: "frame", options: [], context: &self.playerKVOContext)
+        view.addObserver(self, forKeyPath: "bounds", options: [], context: &self.playerKVOContext)
         
         return view
     })()
@@ -52,6 +55,9 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     deinit
     {
         removePlaybackTimeObserver()
+        
+        view.removeObserver(self, forKeyPath: "bounds")
+        player?.removeObserver(self, forKeyPath: "status")
     }
     
     // MARK: - Public
@@ -64,6 +70,7 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
             
             playerLayer = AVPlayerLayer(player: player)
             playerLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
+            playerLayer?.frame = view.bounds
             
             view.layer.addSublayer(playerLayer!)
         }
@@ -71,6 +78,12 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         if let controlsView = controlsView {
             controlsView.frame = view.bounds
             view.addSubview(controlsView)
+            controlsView.snp_makeConstraints { (make) -> Void in
+                make.top.equalTo(view.snp_top)
+                make.bottom.equalTo(view.snp_bottom)
+                make.left.equalTo(view.snp_left)
+                make.right.equalTo(view.snp_right)
+            }
             
             controlsView.pauseButton?.hidden = true
             controlsView.seekSlider?.minimumValue = 0
@@ -133,10 +146,8 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
             }
             
             updateControlsView()
-        } else if keyPath == "frame" {
+        } else if keyPath == "bounds" {
             playerLayer?.frame = view.bounds
-            controlsView?.frame = view.bounds
-            activityIndicatorView.center = view.center
         }
     }
     

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1EB613C5668C23D4EE3E96FF /* Pods_ANPlayerController_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67EE23E19CD17D60CDB4D45 /* Pods_ANPlayerController_Tests.framework */; };
+		2312B4481D1344A500619962 /* ANFeedTableViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2312B4471D1344A500619962 /* ANFeedTableViewTableViewController.swift */; };
+		2312B44A1D13475000619962 /* ANVideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2312B4491D13475000619962 /* ANVideoTableViewCell.swift */; };
 		23ACEC301D11DAF300FC8C35 /* VODItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ACEC2F1D11DAF300FC8C35 /* VODItem.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -31,6 +33,8 @@
 /* Begin PBXFileReference section */
 		0210AF7C41381B2AD25FA908 /* Pods-ANPlayerController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ANPlayerController_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ANPlayerController_Example/Pods-ANPlayerController_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		1154E48785972597EB1BEC59 /* Pods-ANPlayerController_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ANPlayerController_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ANPlayerController_Tests/Pods-ANPlayerController_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		2312B4471D1344A500619962 /* ANFeedTableViewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANFeedTableViewTableViewController.swift; sourceTree = "<group>"; };
+		2312B4491D13475000619962 /* ANVideoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANVideoTableViewCell.swift; sourceTree = "<group>"; };
 		23ACEC2F1D11DAF300FC8C35 /* VODItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VODItem.swift; sourceTree = "<group>"; };
 		6074E631770FF203EBB49BE4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* ANPlayerController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ANPlayerController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +102,8 @@
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				23ACEC2F1D11DAF300FC8C35 /* VODItem.swift */,
+				2312B4491D13475000619962 /* ANVideoTableViewCell.swift */,
+				2312B4471D1344A500619962 /* ANFeedTableViewTableViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -362,6 +368,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2312B44A1D13475000619962 /* ANVideoTableViewCell.swift in Sources */,
+				2312B4481D1344A500619962 /* ANFeedTableViewTableViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				23ACEC301D11DAF300FC8C35 /* VODItem.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,

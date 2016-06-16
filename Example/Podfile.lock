@@ -1,16 +1,20 @@
 PODS:
-  - ANPlayerController (0.1.0)
+  - ANPlayerController (0.1.0):
+    - SnapKit (~> 0.21)
+  - SnapKit (0.21.0)
 
 DEPENDENCIES:
   - ANPlayerController (from `../`)
+  - SnapKit
 
 EXTERNAL SOURCES:
   ANPlayerController:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ANPlayerController: 92ffa789e2d27a433e353acaffa8b9fef437e2df
+  ANPlayerController: 4f3729b1f711ad77b6568811f5d2d2630dd4b0e7
+  SnapKit: 2756fe24b706367af224c9c508d2f9166d03354c
 
-PODFILE CHECKSUM: d653c61e0a6490139356bc3b17db212beb695263
+PODFILE CHECKSUM: bf34f66da193776aac0e218e2d76f69039e231c7
 
 COCOAPODS: 1.0.1
