@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum ANPlayerControlsViewState
+{
+    case Pause
+    case Play
+}
+
 public class ANPlayerControlsView: UIView
 {
     @IBOutlet weak public var playButton: UIButton?
@@ -20,14 +26,29 @@ public class ANPlayerControlsView: UIView
     @IBOutlet weak public var totalTimeLabel: UILabel?
     @IBOutlet weak public var controlsView: UIView?
     
+    var state: ANPlayerControlsViewState = .Pause {
+        didSet {
+            switch state {
+            case .Play:
+                pauseButton?.hidden = false
+                playButton?.hidden = true
+            default:
+                pauseButton?.hidden = true
+                playButton?.hidden = false
+            }
+        }
+    }
+    
     public override func awakeFromNib()
     {
         super.awakeFromNib()
         
-        let minTrackImage = UIImage(named: "min_slide_track")?.stretchableImageWithLeftCapWidth(10, topCapHeight: 0)
-        let maxTrackImage = UIImage(named: "max_slide_track")?.stretchableImageWithLeftCapWidth(10, topCapHeight: 0)
+        state = .Pause
         
-        seekSlider?.setThumbImage(UIImage(named: "slide_thumb"), forState: .Normal)
+        let minTrackImage = UIImage(named: "min_slide_track", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection: nil)?.stretchableImageWithLeftCapWidth(10, topCapHeight: 0)
+        let maxTrackImage = UIImage(named: "max_slide_track", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection: nil)?.stretchableImageWithLeftCapWidth(10, topCapHeight: 0)
+        
+        seekSlider?.setThumbImage(UIImage(named: "slide_thumb", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection: nil), forState: .Normal)
         seekSlider?.setMinimumTrackImage(minTrackImage, forState: .Normal)
         seekSlider?.setMaximumTrackImage(maxTrackImage, forState: .Normal)
     }

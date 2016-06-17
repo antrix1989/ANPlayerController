@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1EB613C5668C23D4EE3E96FF /* Pods_ANPlayerController_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67EE23E19CD17D60CDB4D45 /* Pods_ANPlayerController_Tests.framework */; };
-		2312B4481D1344A500619962 /* ANFeedTableViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2312B4471D1344A500619962 /* ANFeedTableViewTableViewController.swift */; };
-		2312B44A1D13475000619962 /* ANVideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2312B4491D13475000619962 /* ANVideoTableViewCell.swift */; };
+		2312B4481D1344A500619962 /* FeedTableViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2312B4471D1344A500619962 /* FeedTableViewTableViewController.swift */; };
+		2312B44A1D13475000619962 /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2312B4491D13475000619962 /* VideoTableViewCell.swift */; };
+		232791441D18942F00583E7E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232791431D18942F00583E7E /* HomeViewController.swift */; };
 		23ACEC301D11DAF300FC8C35 /* VODItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ACEC2F1D11DAF300FC8C35 /* VODItem.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
+		607FACD81AFB9204008FA782 /* SinglePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* SinglePlayerViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
@@ -33,14 +34,15 @@
 /* Begin PBXFileReference section */
 		0210AF7C41381B2AD25FA908 /* Pods-ANPlayerController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ANPlayerController_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ANPlayerController_Example/Pods-ANPlayerController_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		1154E48785972597EB1BEC59 /* Pods-ANPlayerController_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ANPlayerController_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ANPlayerController_Tests/Pods-ANPlayerController_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		2312B4471D1344A500619962 /* ANFeedTableViewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANFeedTableViewTableViewController.swift; sourceTree = "<group>"; };
-		2312B4491D13475000619962 /* ANVideoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANVideoTableViewCell.swift; sourceTree = "<group>"; };
+		2312B4471D1344A500619962 /* FeedTableViewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewTableViewController.swift; sourceTree = "<group>"; };
+		2312B4491D13475000619962 /* VideoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
+		232791431D18942F00583E7E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		23ACEC2F1D11DAF300FC8C35 /* VODItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VODItem.swift; sourceTree = "<group>"; };
 		6074E631770FF203EBB49BE4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* ANPlayerController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ANPlayerController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		607FACD71AFB9204008FA782 /* SinglePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePlayerViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -100,10 +102,11 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				607FACD71AFB9204008FA782 /* SinglePlayerViewController.swift */,
+				232791431D18942F00583E7E /* HomeViewController.swift */,
+				2312B4471D1344A500619962 /* FeedTableViewTableViewController.swift */,
+				2312B4491D13475000619962 /* VideoTableViewCell.swift */,
 				23ACEC2F1D11DAF300FC8C35 /* VODItem.swift */,
-				2312B4491D13475000619962 /* ANVideoTableViewCell.swift */,
-				2312B4471D1344A500619962 /* ANFeedTableViewTableViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -368,11 +371,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2312B44A1D13475000619962 /* ANVideoTableViewCell.swift in Sources */,
-				2312B4481D1344A500619962 /* ANFeedTableViewTableViewController.swift in Sources */,
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				2312B44A1D13475000619962 /* VideoTableViewCell.swift in Sources */,
+				2312B4481D1344A500619962 /* FeedTableViewTableViewController.swift in Sources */,
+				607FACD81AFB9204008FA782 /* SinglePlayerViewController.swift in Sources */,
 				23ACEC301D11DAF300FC8C35 /* VODItem.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				232791441D18942F00583E7E /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +506,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ANPlayerController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -515,6 +520,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ANPlayerController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SinglePlayerViewController.swift
 //  ANPlayerController
 //
 //  Created by Sergey Demchenko on 06/14/2016.
@@ -8,8 +8,9 @@
 
 import UIKit
 import ANPlayerController
+import SnapKit
 
-class ViewController: UIViewController
+class SinglePlayerViewController: UIViewController
 {
     @IBOutlet var containerView: UIView!
     
@@ -27,6 +28,12 @@ class ViewController: UIViewController
         player.prepare()
         
         containerView.addSubview(player.view)
+        player.view.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(containerView.snp_top)
+            make.bottom.equalTo(containerView.snp_bottom)
+            make.left.equalTo(containerView.snp_left)
+            make.right.equalTo(containerView.snp_right)
+        }
         player.view.frame = containerView.bounds
     }
     

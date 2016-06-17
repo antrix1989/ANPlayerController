@@ -17,8 +17,11 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="player_controls_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="JNq-xs-Wbv">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
                         </imageView>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H1K-pM-B3h" userLabel="Curent Time">
-                            <rect key="frame" x="50" y="12" width="46" height="21"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H1K-pM-B3h" userLabel="Curent Time">
+                            <rect key="frame" x="50" y="12" width="50" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="nPr-hg-mlH"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
@@ -44,10 +47,13 @@
                             </state>
                         </button>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Bf3-FB-ZzJ">
-                            <rect key="frame" x="104" y="8" width="152" height="31"/>
+                            <rect key="frame" x="108" y="8" width="144" height="31"/>
                         </slider>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TK5-1K-jas" userLabel="Total Time">
-                            <rect key="frame" x="264" y="12" width="46" height="21"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TK5-1K-jas" userLabel="Total Time">
+                            <rect key="frame" x="260" y="12" width="50" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="Mlw-Ep-ZE5"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>

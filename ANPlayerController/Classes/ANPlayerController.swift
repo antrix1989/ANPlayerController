@@ -54,25 +54,20 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     deinit
     {
-        removePlaybackTimeObserver()
-        
         view.removeObserver(self, forKeyPath: "bounds")
-        player?.removeObserver(self, forKeyPath: "status")
+        
+        removePlayer()
     }
     
     // MARK: - Public
     
     public func prepare()
     {
+        removePlayer()
+        resetControlsView()
+        
         if let contentVideoUrl = playable?.contentVideoUrl  {
-            player = AVPlayer(URL: contentVideoUrl)
-            player!.addObserver(self, forKeyPath: "status", options: [], context: &playerKVOContext)
-            
-            playerLayer = AVPlayerLayer(player: player)
-            playerLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
-            playerLayer?.frame = view.bounds
-            
-            view.layer.addSublayer(playerLayer!)
+            createPlayer(contentVideoUrl)
         }
         
         if let controlsView = controlsView {
@@ -85,10 +80,7 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
                 make.right.equalTo(view.snp_right)
             }
             
-            controlsView.pauseButton?.hidden = true
-            controlsView.seekSlider?.minimumValue = 0
-            controlsView.seekSlider?.maximumValue = 0
-            controlsView.seekSlider?.value = 0
+            controlsView.state = .Pause
             
             controlsView.playButton?.addTarget(self, action: #selector(onPlayButtonTapped(_:)), forControlEvents: .TouchUpInside)
             controlsView.pauseButton?.addTarget(self, action: #selector(onPauseButtonTapped(_:)), forControlEvents: .TouchUpInside)
@@ -105,8 +97,7 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     public func play()
     {
-        controlsView?.playButton?.hidden = true
-        controlsView?.pauseButton?.hidden = false
+        controlsView?.state = .Play
         
         activityIndicatorView.startAnimating()
         addPlaybackTimeObserver()
@@ -115,21 +106,28 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     public func pause()
     {
-        player?.pause()
+        stopHideControllsTimer()
         
-        controlsView?.playButton?.hidden = false
-        controlsView?.pauseButton?.hidden = true
+        controlsView?.state = .Pause
+        
+        controlsView?.hidden = false
+        
+        player?.pause()
     }
     
     public func stop()
     {
-        
+        player?.pause()
+        seekToTime(0)
+        resetControlsView()
     }
     
     public func seekToTime(time: NSTimeInterval)
     {
-        
+        player?.seekToTime(CMTimeMakeWithSeconds(time, Int32(NSEC_PER_SEC)))
     }
+    
+    // MARK: - KVO
     
     override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>)
     {
@@ -153,9 +151,54 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     // MARK: - Protected
     
+    func onItemDidFinishPlayingNotification(notification: NSNotification)
+    {
+        stop()
+    }
+    
+    func createPlayer(contentVideoUrl: NSURL)
+    {
+        let playerItem = AVPlayerItem(URL: contentVideoUrl)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onItemDidFinishPlayingNotification(_:)), name: AVPlayerItemDidPlayToEndTimeNotification, object: playerItem)
+        
+        player = AVPlayer(playerItem: playerItem)
+        player!.addObserver(self, forKeyPath: "status", options: [], context: &playerKVOContext)
+        
+        playerLayer = AVPlayerLayer(player: player)
+        playerLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
+        playerLayer?.frame = view.bounds
+        
+        view.layer.addSublayer(playerLayer!)
+    }
+    
+    func removePlayer()
+    {
+        if let playerItem = player?.currentItem {
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: AVPlayerItemDidPlayToEndTimeNotification, object: playerItem)
+        }
+        
+        player?.removeObserver(self, forKeyPath: "status")
+        player = nil
+        playerLayer?.removeFromSuperlayer()
+        playerLayer = nil
+        
+        removePlaybackTimeObserver()
+    }
+    
     func minutes(totalSeconds: Double) -> Int { return Int(floor(totalSeconds % 3600 / 60)) }
     
     func seconds(totalSeconds: Double) -> Int { return Int(floor(totalSeconds % 3600 % 60)) }
+    
+    func resetControlsView()
+    {
+        setCurrentTimeLabelValue(kCMTimeZero)
+        controlsView?.state = .Pause
+        controlsView?.seekSlider?.minimumValue = 0
+        controlsView?.seekSlider?.maximumValue = 0
+        controlsView?.seekSlider?.value = 0
+        
+        updateControlsView()
+    }
     
     func updateControlsView()
     {
@@ -163,21 +206,8 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
             let durationTotalSeconds = CMTimeGetSeconds(duration)
             
             controlsView?.totalTimeLabel?.text = String(format: "%02lu:%02lu", minutes(durationTotalSeconds), seconds(durationTotalSeconds))
+            controlsView?.seekSlider?.maximumValue = Float(durationTotalSeconds)
         }
-    }
-
-    func addTapGestureRecognizer()
-    {
-        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGesture(_:)))
-        tapRecognizer?.cancelsTouchesInView = false
-        tapRecognizer?.delegate = self
-        view.addGestureRecognizer(tapRecognizer!)
-    }
-    
-    func tapGesture(recognizer: UIPanGestureRecognizer)
-    {
-        controlsView?.hidden = false
-        stopHideControllsTimer()
     }
     
     func stopHideControllsTimer()
@@ -223,29 +253,47 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     func hideControlsView(hide: Bool, afterInterval interval: NSTimeInterval)
     {
-        NSTimer.schedule(delay: interval) { [weak self] (timer) in
+        hideControlsTimer = NSTimer.schedule(delay: interval) { [weak self] (timer) in
             self?.controlsView?.hidden = hide
         }
+    }
+    
+    // MARK: - UITapGestureRecognizer
+    
+    func addTapGestureRecognizer()
+    {
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapGesture(_:)))
+        tapRecognizer?.cancelsTouchesInView = false
+        tapRecognizer?.delegate = self
+        view.addGestureRecognizer(tapRecognizer!)
+        
+        debugPrint(view)
+    }
+    
+    func onTapGesture(recognizer: UITapGestureRecognizer)
+    {
+        controlsView?.hidden = false
+        stopHideControllsTimer()
+    }
+    
+    // MARK: - UIGestureRecognizerDelegate
+    
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool
+    {
+        debugPrint(view)
+        debugPrint(touch.view)
+        return view == touch.view
     }
     
     // MARK: - IBAction
     
     @IBAction func onPlayButtonTapped(sender: AnyObject)
     {
-        controlsView?.playButton?.hidden = true
-        controlsView?.pauseButton?.hidden = false
-        
         play()
     }
     
     @IBAction func onPauseButtonTapped(sender: AnyObject)
     {
-        stopHideControllsTimer()
-        
-        controlsView?.playButton?.hidden = true
-        controlsView?.pauseButton?.hidden = false
-        controlsView?.hidden = false
-        
         pause()
     }
     
