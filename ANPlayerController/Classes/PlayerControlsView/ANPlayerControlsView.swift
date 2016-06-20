@@ -14,7 +14,7 @@ enum ANPlayerControlsViewState
     case Play
 }
 
-public class ANPlayerControlsView: UIView
+public class ANPlayerControlsView: UIView, UIGestureRecognizerDelegate
 {
     @IBOutlet weak public var playButton: UIButton?
     @IBOutlet weak public var pauseButton: UIButton?

@@ -79,29 +79,30 @@ class FeedTableViewTableViewController: UITableViewController
     private func onScrollViewEndScrolling()
     {
         var isPlayingCellFound = false
-        for cell in tableView.visibleCells {
-            if let indexPath = tableView.indexPathForCell(cell) {
-                let player = players[indexPath]
-                
-                if isPlayingCellFound {
-                    player?.stop()
-                    continue
-                }
-                
-                let rectInTableView = tableView.rectForRowAtIndexPath(indexPath)
-                let rectInSuperview = tableView.convertRect(rectInTableView, toView: tableView.superview)
-                
-                let intersection = CGRectIntersection(tableView.frame, rectInSuperview)
-                let visibleHeight = CGRectGetHeight(intersection)
-                let cellHeigt = CGRectGetHeight(rectInTableView)
-                let navigationBarHeight = navigationController?.navigationBar.bounds.height ?? 0
-                if visibleHeight - navigationBarHeight > cellHeigt * 0.6 {
-                    isPlayingCellFound = true
-                    player?.play()
-                } else {
-                    player?.stop()
-                }
+        for (row, _) in videoUrls.enumerate() {
+            let indexPath = NSIndexPath(forRow: row, inSection: 0)
+            
+            let player = players[indexPath]
+            
+            if isPlayingCellFound {
+                player?.stop()
+                continue
             }
+            
+            let rectInTableView = tableView.rectForRowAtIndexPath(indexPath)
+            let rectInSuperview = tableView.convertRect(rectInTableView, toView: tableView.superview)
+            
+            let intersection = CGRectIntersection(tableView.frame, rectInSuperview)
+            let visibleHeight = CGRectGetHeight(intersection)
+            let cellHeigt = CGRectGetHeight(rectInTableView)
+            let navigationBarHeight = navigationController?.navigationBar.bounds.height ?? 0
+            if visibleHeight - navigationBarHeight > cellHeigt * 0.6 {
+                isPlayingCellFound = true
+                player?.play()
+            } else {
+                player?.stop()
+            }
+
         }
     }
 }

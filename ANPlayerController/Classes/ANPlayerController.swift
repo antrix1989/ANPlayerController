@@ -81,6 +81,7 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
             }
             
             controlsView.state = .Pause
+            controlsView.hidden = true
             
             controlsView.playButton?.addTarget(self, action: #selector(onPlayButtonTapped(_:)), forControlEvents: .TouchUpInside)
             controlsView.pauseButton?.addTarget(self, action: #selector(onPauseButtonTapped(_:)), forControlEvents: .TouchUpInside)
@@ -109,7 +110,6 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         stopHideControllsTimer()
         
         controlsView?.state = .Pause
-        
         controlsView?.hidden = false
         
         player?.pause()
@@ -255,19 +255,29 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     {
         hideControlsTimer = NSTimer.schedule(delay: interval) { [weak self] (timer) in
             self?.controlsView?.hidden = hide
+            self?.hideControlsTimer?.invalidate()
+            self?.hideControlsTimer = nil
         }
     }
     
     // MARK: - UITapGestureRecognizer
     
+    func removeTapGestureRecognizer()
+    {
+        if let tapRecognizer = self.tapRecognizer {
+            view.removeGestureRecognizer(tapRecognizer)
+            self.tapRecognizer = nil
+        }
+    }
+    
     func addTapGestureRecognizer()
     {
+        removeTapGestureRecognizer()
+        
         tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapGesture(_:)))
         tapRecognizer?.cancelsTouchesInView = false
         tapRecognizer?.delegate = self
         view.addGestureRecognizer(tapRecognizer!)
-        
-        debugPrint(view)
     }
     
     func onTapGesture(recognizer: UITapGestureRecognizer)
@@ -280,8 +290,6 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool
     {
-        debugPrint(view)
-        debugPrint(touch.view)
         return view == touch.view
     }
     
