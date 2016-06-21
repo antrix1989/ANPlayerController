@@ -165,7 +165,7 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         player!.addObserver(self, forKeyPath: "status", options: [], context: &playerKVOContext)
         
         playerLayer = AVPlayerLayer(player: player)
-        playerLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
+        playerLayer!.videoGravity = AVLayerVideoGravityResizeAspect
         playerLayer?.frame = view.bounds
         
         view.layer.addSublayer(playerLayer!)
