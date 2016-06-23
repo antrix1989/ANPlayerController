@@ -114,7 +114,6 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4P-tv-phu">
                                 <rect key="frame" x="12" y="76" width="296" height="200"/>
-                                <color key="backgroundColor" red="0.98039221759999995" green="0.68235296010000002" blue="0.1647058874" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="MUC-NJ-ewY"/>
                                     <constraint firstAttribute="height" constant="200" id="ew4-nH-i75"/>
@@ -170,18 +169,53 @@
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xlU-y5-Mi1">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wEL-lb-MMQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ta7-2V-IM1">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGs-mZ-0vV">
+                                                    <rect key="frame" x="135" y="75" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="1Fv-Gi-yHl"/>
+                                                        <constraint firstAttribute="width" constant="50" id="Q4Y-eP-zPB"/>
+                                                    </constraints>
+                                                    <state key="normal" image="play_btn"/>
+                                                    <connections>
+                                                        <action selector="onPlayButtonTapped:" destination="BUW-hg-9h2" eventType="touchUpInside" id="X7s-Br-JMn"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="IGs-mZ-0vV" firstAttribute="centerX" secondItem="wEL-lb-MMQ" secondAttribute="centerX" id="0Lm-Ph-fu9"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ta7-2V-IM1" secondAttribute="trailing" id="B09-1J-FMC"/>
+                                                <constraint firstItem="IGs-mZ-0vV" firstAttribute="centerY" secondItem="wEL-lb-MMQ" secondAttribute="centerY" id="InI-yI-oFD"/>
+                                                <constraint firstItem="Ta7-2V-IM1" firstAttribute="top" secondItem="wEL-lb-MMQ" secondAttribute="top" id="QtX-3w-KR0"/>
+                                                <constraint firstItem="Ta7-2V-IM1" firstAttribute="leading" secondItem="wEL-lb-MMQ" secondAttribute="leading" id="Znn-s1-931"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ta7-2V-IM1" secondAttribute="bottom" id="wTo-94-nLo"/>
+                                            </constraints>
                                         </view>
                                     </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstItem="wEL-lb-MMQ" firstAttribute="leading" secondItem="cF6-57-hfT" secondAttribute="leading" id="9ih-Jm-DNv"/>
+                                        <constraint firstItem="wEL-lb-MMQ" firstAttribute="top" secondItem="cF6-57-hfT" secondAttribute="top" id="HLe-33-k7r"/>
                                         <constraint firstItem="xlU-y5-Mi1" firstAttribute="leading" secondItem="cF6-57-hfT" secondAttribute="leading" id="TKL-JZ-Ug8"/>
                                         <constraint firstAttribute="bottom" secondItem="xlU-y5-Mi1" secondAttribute="bottom" id="VFd-dD-ABp"/>
                                         <constraint firstItem="xlU-y5-Mi1" firstAttribute="top" secondItem="cF6-57-hfT" secondAttribute="top" id="dRX-gE-Cxa"/>
+                                        <constraint firstAttribute="bottom" secondItem="wEL-lb-MMQ" secondAttribute="bottom" id="dT7-0a-1hd"/>
                                         <constraint firstAttribute="trailing" secondItem="xlU-y5-Mi1" secondAttribute="trailing" id="tGt-ZZ-6YD"/>
+                                        <constraint firstAttribute="trailing" secondItem="wEL-lb-MMQ" secondAttribute="trailing" id="tvT-KA-crd"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="videoContainerView" destination="xlU-y5-Mi1" id="PGs-Yz-TtA"/>
+                                    <outlet property="videoThumbnailImageView" destination="Ta7-2V-IM1" id="jnC-GV-xwE"/>
+                                    <outlet property="videoThumnailContainerView" destination="wEL-lb-MMQ" id="HAg-tJ-jat"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -199,4 +233,7 @@
             <point key="canvasLocation" x="768" y="-217"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="play_btn" width="16" height="19"/>
+    </resources>
 </document>

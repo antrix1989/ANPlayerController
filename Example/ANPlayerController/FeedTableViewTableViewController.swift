@@ -42,6 +42,13 @@ class FeedTableViewTableViewController: UITableViewController
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("VideoTableViewCell", forIndexPath: indexPath) as! VideoTableViewCell
+        
+        cell.videoThumbnailImageView.sd_setImageWithURL(NSURL(string: "https://process.filestackapi.com/AhTgLagciQByzXpFGRI0Az/resize=w:300,h:200,f:crop/output=f:jpg,q:66/https://cdn.filestackcontent.com/3p5lj8hdQMW1T6eZHtji"))
+        
+        cell.onPlayButtonTappedBlock = { [weak self] (sender) -> Void in
+            self?.playVideoAtIndexPath(indexPath)
+        }
+        
         return cell
     }
     
@@ -78,6 +85,7 @@ class FeedTableViewTableViewController: UITableViewController
         if let currentPlayingIndexPath = currentPlayingIndexPath where indexPath == currentPlayingIndexPath { return }
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoTableViewCell
+        cell.showVideoView(true)
         
         player.view.removeFromSuperview()
         cell.videoContainerView.addSubview(player.view)
@@ -104,6 +112,9 @@ class FeedTableViewTableViewController: UITableViewController
         if let currentPlayingIndexPath = self.currentPlayingIndexPath where currentPlayingIndexPath == indexPath {
             stopPlayer()
         }
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoTableViewCell
+        cell.showVideoView(false)
     }
     
     private func onScrollViewEndScrolling()
