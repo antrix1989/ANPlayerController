@@ -4,6 +4,7 @@ use_frameworks!
 target 'ANPlayerController_Example' do
   pod 'ANPlayerController', :path => '../'
   pod 'SnapKit'
+  pod 'SDWebImage'
 
   target 'ANPlayerController_Tests' do
     inherit! :search_paths

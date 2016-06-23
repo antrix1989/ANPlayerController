@@ -1,10 +1,14 @@
 PODS:
   - ANPlayerController (0.1.0):
     - SnapKit (~> 0.21)
+  - SDWebImage (3.8.1):
+    - SDWebImage/Core (= 3.8.1)
+  - SDWebImage/Core (3.8.1)
   - SnapKit (0.21.0)
 
 DEPENDENCIES:
   - ANPlayerController (from `../`)
+  - SDWebImage
   - SnapKit
 
 EXTERNAL SOURCES:
@@ -13,8 +17,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   ANPlayerController: 4f3729b1f711ad77b6568811f5d2d2630dd4b0e7
+  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   SnapKit: 2756fe24b706367af224c9c508d2f9166d03354c
 
-PODFILE CHECKSUM: b39c8525c68f7a2b22bc6281f23417a088a5a54c
+PODFILE CHECKSUM: 8f2c50fc4dfcb214fd9c8908b90d7e79341d77a9
 
 COCOAPODS: 1.0.1
