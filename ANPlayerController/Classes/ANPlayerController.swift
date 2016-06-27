@@ -38,6 +38,8 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     /// Video loading indciator view.
     public var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     
+    public var onPlayableDidFinishPlayingBlock : ((ANPlayable?) -> Void) = { (playable) -> Void in }
+    
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     var hideControlsTimer: NSTimer?
@@ -93,6 +95,15 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         
         addTapGestureRecognizer()
     }
+//    
+//    public func setFullscreen(fullscreen: Bool, animated: Bool)
+//    {
+//        let superView = view.superview
+//        
+//        view.removeFromSuperview()
+////        UIScreen.mainScreen().view
+//        UIApplication.sharedApplication().keyWindow?.addSubview(view)
+//    }
     
     // MARK: - ANMediaPlayback
     
@@ -120,6 +131,8 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         player?.pause()
         seekToTime(0)
         resetControlsView()
+        
+        onPlayableDidFinishPlayingBlock(playable)
     }
     
     public func seekToTime(time: NSTimeInterval)

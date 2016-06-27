@@ -47,6 +47,7 @@ class FeedTableViewTableViewController: UITableViewController
         
         cell.onPlayButtonTappedBlock = { [weak self] (sender) -> Void in
             self?.playVideoAtIndexPath(indexPath)
+//            self?.player.setFullscreen(true, animated: true)
         }
         
         return cell
@@ -55,7 +56,7 @@ class FeedTableViewTableViewController: UITableViewController
     override func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
     {
         if let currentPlayingIndexPath = self.currentPlayingIndexPath where currentPlayingIndexPath == indexPath {
-            stopPlayer()
+            player.stop()
         }
     }
     
@@ -73,13 +74,6 @@ class FeedTableViewTableViewController: UITableViewController
     
     // MARK: - Private
     
-    func stopPlayer()
-    {
-        player.stop()
-        player.view.removeFromSuperview()
-        currentPlayingIndexPath = nil
-    }
-    
     private func playVideoAtIndexPath(indexPath: NSIndexPath)
     {
         if let currentPlayingIndexPath = currentPlayingIndexPath where indexPath == currentPlayingIndexPath { return }
@@ -87,6 +81,7 @@ class FeedTableViewTableViewController: UITableViewController
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoTableViewCell
         cell.showVideoView(true)
         
+        player.stop()
         player.view.removeFromSuperview()
         cell.videoContainerView.addSubview(player.view)
         player.view.snp_makeConstraints { (make) -> Void in
@@ -105,12 +100,20 @@ class FeedTableViewTableViewController: UITableViewController
         player.playable = vodItem
         player.prepare()
         player.play()
+        
+        player.onPlayableDidFinishPlayingBlock = { [weak self] (playable) -> Void in
+            if let weakSelf = self, let cell = weakSelf.tableView.cellForRowAtIndexPath(indexPath) as? VideoTableViewCell {
+                cell.showVideoView(false)
+                weakSelf.player.view.removeFromSuperview()
+                weakSelf.currentPlayingIndexPath = nil
+            }
+        }
     }
     
     private func stopVideoPlayingAtIndexPath(indexPath: NSIndexPath)
     {
         if let currentPlayingIndexPath = self.currentPlayingIndexPath where currentPlayingIndexPath == indexPath {
-            stopPlayer()
+            player.stop()
         }
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoTableViewCell
