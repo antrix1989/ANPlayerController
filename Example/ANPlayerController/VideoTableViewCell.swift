@@ -13,6 +13,8 @@ class VideoTableViewCell: UITableViewCell
     @IBOutlet var videoContainerView: UIView!
     @IBOutlet var videoThumnailContainerView: UIView!
     @IBOutlet var videoThumbnailImageView: UIImageView!
+    @IBOutlet var playButton: UIButton!
+    @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
     
     var onPlayButtonTappedBlock : ((AnyObject) -> Void) = { (sender) -> Void in }
     
@@ -20,6 +22,17 @@ class VideoTableViewCell: UITableViewCell
     {
         videoContainerView.hidden = !show
         videoThumnailContainerView.hidden = !videoContainerView.hidden
+    }
+    
+    func showLoadingAnimation(show: Bool)
+    {
+        if show {
+            activityIndicatorView.startAnimating()
+        } else {
+            activityIndicatorView.stopAnimating()
+        }
+        
+        playButton.hidden = show
     }
     
     // MARK: - IBAction

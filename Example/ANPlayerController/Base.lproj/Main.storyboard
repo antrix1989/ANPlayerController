@@ -188,14 +188,21 @@
                                                         <action selector="onPlayButtonTapped:" destination="BUW-hg-9h2" eventType="touchUpInside" id="X7s-Br-JMn"/>
                                                     </connections>
                                                 </button>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="gtM-lj-D3P">
+                                                    <rect key="frame" x="135" y="75" width="50" height="50"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="IGs-mZ-0vV" firstAttribute="centerX" secondItem="wEL-lb-MMQ" secondAttribute="centerX" id="0Lm-Ph-fu9"/>
+                                                <constraint firstItem="gtM-lj-D3P" firstAttribute="trailing" secondItem="IGs-mZ-0vV" secondAttribute="trailing" id="5dV-lr-uCG"/>
+                                                <constraint firstItem="gtM-lj-D3P" firstAttribute="bottom" secondItem="IGs-mZ-0vV" secondAttribute="bottom" id="6GA-hC-Q8i"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ta7-2V-IM1" secondAttribute="trailing" id="B09-1J-FMC"/>
                                                 <constraint firstItem="IGs-mZ-0vV" firstAttribute="centerY" secondItem="wEL-lb-MMQ" secondAttribute="centerY" id="InI-yI-oFD"/>
                                                 <constraint firstItem="Ta7-2V-IM1" firstAttribute="top" secondItem="wEL-lb-MMQ" secondAttribute="top" id="QtX-3w-KR0"/>
                                                 <constraint firstItem="Ta7-2V-IM1" firstAttribute="leading" secondItem="wEL-lb-MMQ" secondAttribute="leading" id="Znn-s1-931"/>
+                                                <constraint firstItem="gtM-lj-D3P" firstAttribute="top" secondItem="IGs-mZ-0vV" secondAttribute="top" id="kAb-ow-cx7"/>
+                                                <constraint firstItem="gtM-lj-D3P" firstAttribute="leading" secondItem="IGs-mZ-0vV" secondAttribute="leading" id="vsO-7W-8Ir"/>
                                                 <constraint firstAttribute="bottom" secondItem="Ta7-2V-IM1" secondAttribute="bottom" id="wTo-94-nLo"/>
                                             </constraints>
                                         </view>
@@ -213,6 +220,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="activityIndicatorView" destination="gtM-lj-D3P" id="iqR-3L-R5O"/>
+                                    <outlet property="playButton" destination="IGs-mZ-0vV" id="4eT-q7-y5R"/>
                                     <outlet property="videoContainerView" destination="xlU-y5-Mi1" id="PGs-Yz-TtA"/>
                                     <outlet property="videoThumbnailImageView" destination="Ta7-2V-IM1" id="jnC-GV-xwE"/>
                                     <outlet property="videoThumnailContainerView" destination="wEL-lb-MMQ" id="HAg-tJ-jat"/>

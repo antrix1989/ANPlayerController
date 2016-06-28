@@ -43,7 +43,7 @@ class FeedTableViewTableViewController: UITableViewController
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("VideoTableViewCell", forIndexPath: indexPath) as! VideoTableViewCell
         
-        cell.videoThumbnailImageView.sd_setImageWithURL(NSURL(string: "https://process.filestackapi.com/AhTgLagciQByzXpFGRI0Az/resize=w:300,h:200,f:crop/output=f:jpg,q:66/https://cdn.filestackcontent.com/3p5lj8hdQMW1T6eZHtji"))
+        cell.videoThumbnailImageView.sd_setImageWithURL(NSURL(string: "https://cdn.filestackcontent.com/3p5lj8hdQMW1T6eZHtji"))
         
         cell.onPlayButtonTappedBlock = { [weak self] (sender) -> Void in
             self?.playVideoAtIndexPath(indexPath)
@@ -79,7 +79,12 @@ class FeedTableViewTableViewController: UITableViewController
         if let currentPlayingIndexPath = currentPlayingIndexPath where indexPath == currentPlayingIndexPath { return }
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoTableViewCell
-        cell.showVideoView(true)
+        cell.showLoadingAnimation(true)
+        
+        player.onReadyToPlayBlock = { () -> Void in
+            cell.showVideoView(true)
+            cell.showLoadingAnimation(false)
+        }
         
         player.stop()
         player.view.removeFromSuperview()

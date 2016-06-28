@@ -18,10 +18,12 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     public lazy var view: UIView = ({
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 160))
         view.backgroundColor = UIColor.blackColor()
-        self.activityIndicatorView.hidesWhenStopped = true
-        view.addSubview(self.activityIndicatorView)
-        self.activityIndicatorView.snp_makeConstraints { (make) -> Void in
-            make.center.equalTo(view.snp_center)
+        if let activityIndicatorView = self.activityIndicatorView {
+            activityIndicatorView.hidesWhenStopped = true
+            view.addSubview(activityIndicatorView)
+            activityIndicatorView.snp_makeConstraints { (make) -> Void in
+                make.center.equalTo(view.snp_center)
+            }
         }
         
         view.addObserver(self, forKeyPath: "bounds", options: [], context: &self.playerKVOContext)
@@ -36,9 +38,10 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     public var hidingControlsInterval: NSTimeInterval = 3
     
     /// Video loading indciator view.
-    public var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+    public var activityIndicatorView: UIActivityIndicatorView?
     
     public var onPlayableDidFinishPlayingBlock : ((ANPlayable?) -> Void) = { (playable) -> Void in }
+    public var onReadyToPlayBlock : (() -> Void) = { () -> Void in }
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
@@ -111,7 +114,7 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     {
         controlsView?.state = .Play
         
-        activityIndicatorView.startAnimating()
+        activityIndicatorView?.startAnimating()
         addPlaybackTimeObserver()
         player?.play()
     }
@@ -150,10 +153,12 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         }
         
         if let player = object as? AVPlayer where player == self.player && keyPath == "status" {
-            activityIndicatorView.stopAnimating()
+            activityIndicatorView?.stopAnimating()
             
             if player.status == .Failed {
                 debugPrint(player.error)
+            } else if player.status == .ReadyToPlay {
+                onReadyToPlayBlock()
             }
             
             updateControlsView()
