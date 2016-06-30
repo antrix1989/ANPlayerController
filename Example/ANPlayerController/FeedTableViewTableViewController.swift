@@ -51,7 +51,7 @@ class FeedTableViewTableViewController: UITableViewController
         
         cell.onPlayButtonTappedBlock = { [weak self] (sender) -> Void in
             self?.playVideoAtIndexPath(indexPath)
-//            self?.player.setFullscreen(true, animated: true)
+            self?.player.setFullscreen(true, animated: true)
         }
         
         return cell

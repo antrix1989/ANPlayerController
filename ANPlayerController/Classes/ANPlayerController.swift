@@ -98,15 +98,23 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         
         addTapGestureRecognizer()
     }
-//    
-//    public func setFullscreen(fullscreen: Bool, animated: Bool)
-//    {
-//        let superView = view.superview
-//        
-//        view.removeFromSuperview()
-////        UIScreen.mainScreen().view
-//        UIApplication.sharedApplication().keyWindow?.addSubview(view)
-//    }
+    
+    public func setFullscreen(fullscreen: Bool, animated: Bool)
+    {
+        view.removeFromSuperview()
+        let fullScreenViewController = ANFullScreenViewController()
+        fullScreenViewController.player = self
+        let _ = fullScreenViewController.view // Load view.
+        fullScreenViewController.fullScreenView.playerContainerView.addSubview(view)
+        view.snp_makeConstraints { (make) in
+            make.top.equalTo(fullScreenViewController.fullScreenView.playerContainerView.snp_top)
+            make.bottom.equalTo(fullScreenViewController.fullScreenView.playerContainerView.snp_bottom)
+            make.left.equalTo(fullScreenViewController.fullScreenView.playerContainerView.snp_left)
+            make.right.equalTo(fullScreenViewController.fullScreenView.playerContainerView.snp_right)
+        }
+        
+        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(fullScreenViewController, animated: animated, completion: nil)
+    }
     
     // MARK: - ANMediaPlayback
     

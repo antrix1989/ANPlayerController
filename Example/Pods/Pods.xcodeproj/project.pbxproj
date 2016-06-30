@@ -22,6 +22,9 @@
 		1B2B381D41924C51CDE5B57AD817FCB3 /* ANPlayerController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 53BF83621D1F7F4751721EEF0DED2FBF /* ANPlayerController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1CEC7F8D3D153BE9331CCCB9A936518B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD87EAB1910CAFFAF20AE1530CA8C49 /* Foundation.framework */; };
 		2310C53FA0C1AA3DBC6E10DBCE6D7AFD /* SDWebImage-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E0D3FDDE505E58951EB741E5DB3353 /* SDWebImage-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2376FF141D25E0680087763E /* ANFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376FF121D25E0680087763E /* ANFullScreenViewController.swift */; };
+		2376FF151D25E0680087763E /* ANFullScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2376FF131D25E0680087763E /* ANFullScreenViewController.xib */; };
+		23A266EB1D25F52700FB5B9C /* ANFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A266EA1D25F52700FB5B9C /* ANFullScreenView.swift */; };
 		26C90A1D3564A792D5ECF11D5E7650BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD87EAB1910CAFFAF20AE1530CA8C49 /* Foundation.framework */; };
 		27DBA8B81BFA309F1944F3D00C462EB1 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = EB7EC7221C6E66B1BF9C2A69C070173A /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		28457C6FEF319F3FA83D1AA2A2ABE0D6 /* SnapKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E688F88FCCEBAE4594DC26CF9E04EB1 /* SnapKit-dummy.m */; };
@@ -120,6 +123,9 @@
 		206150A2C02DBD47EBA4EEBDCC3613B6 /* Pods-ANPlayerController_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ANPlayerController_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		20A7C7D4962D76CB669C9DDD7E7E98DD /* NSData+ImageContentType.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSData+ImageContentType.m"; path = "SDWebImage/NSData+ImageContentType.m"; sourceTree = "<group>"; };
 		226C737C69CAACA4A3C93EA8F8A524A7 /* UIView+CreateFromNib.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIView+CreateFromNib.swift"; sourceTree = "<group>"; };
+		2376FF121D25E0680087763E /* ANFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANFullScreenViewController.swift; sourceTree = "<group>"; };
+		2376FF131D25E0680087763E /* ANFullScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ANFullScreenViewController.xib; sourceTree = "<group>"; };
+		23A266EA1D25F52700FB5B9C /* ANFullScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANFullScreenView.swift; sourceTree = "<group>"; };
 		25E67A826A30C510D54DEE8432BE5A37 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26C4F19289CC8DC4C0441002B9A28E42 /* Pods-ANPlayerController_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-ANPlayerController_Example.modulemap"; sourceTree = "<group>"; };
 		2B37D5ACCB805517AC0AD754358FFC58 /* SDWebImageDownloaderOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageDownloaderOperation.h; path = SDWebImage/SDWebImageDownloaderOperation.h; sourceTree = "<group>"; };
@@ -260,6 +266,16 @@
 			);
 			name = ANPlayerController;
 			path = ../..;
+			sourceTree = "<group>";
+		};
+		2376FF111D25E0680087763E /* FullScreenViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2376FF121D25E0680087763E /* ANFullScreenViewController.swift */,
+				2376FF131D25E0680087763E /* ANFullScreenViewController.xib */,
+				23A266EA1D25F52700FB5B9C /* ANFullScreenView.swift */,
+			);
+			path = FullScreenViewController;
 			sourceTree = "<group>";
 		};
 		2FD7837A45342491E67A98DF1703BC72 /* SnapKit */ = {
@@ -523,6 +539,7 @@
 				410C2EE961B191C2A3ED0F332ACC8271 /* NSTimer+Closure.swift */,
 				226C737C69CAACA4A3C93EA8F8A524A7 /* UIView+CreateFromNib.swift */,
 				DB4E7EE9B3E8CE3E411DC84D12CA51C8 /* PlayerControlsView */,
+				2376FF111D25E0680087763E /* FullScreenViewController */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -713,6 +730,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2376FF151D25E0680087763E /* ANFullScreenViewController.xib in Resources */,
 				806B25AFEF256502DEAEFAD5F44BF735 /* ANPlayerImages.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -784,10 +802,12 @@
 			files = (
 				096485F6C378E19BA63F0E7D3D706AA6 /* ANMediaPlayback.swift in Sources */,
 				1679ADE4CAECA3FBE4EB8C9C8801B7B4 /* ANPlayable.swift in Sources */,
+				23A266EB1D25F52700FB5B9C /* ANFullScreenView.swift in Sources */,
 				63001C016D9B8EC4DCA83A4B674A3EDE /* ANPlayerController-dummy.m in Sources */,
 				13318F5C1BCB7B29AF2791BD06784C1E /* ANPlayerController.swift in Sources */,
 				577D34B2AA7533804261BBD83CA30286 /* ANPlayerControlsView.swift in Sources */,
 				3771B1C2A92B40D8B11FB4A4AB060FF3 /* ANPlayerControlsView.xib in Sources */,
+				2376FF141D25E0680087763E /* ANFullScreenViewController.swift in Sources */,
 				2D89935DB4F53A201A951E6152797176 /* NSTimer+Closure.swift in Sources */,
 				4EDF4AD4957A4B5208962D6526EF0574 /* UIView+CreateFromNib.swift in Sources */,
 			);
