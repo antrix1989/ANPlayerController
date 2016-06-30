@@ -13,16 +13,19 @@ import SDWebImage
 
 class FeedTableViewTableViewController: UITableViewController
 {
-    let videoUrls = [
-        NSURL(string: "https://cdn.filestackcontent.com/ocLFkfTtRgq3p5QG0unu"),
-        NSURL(string: "https://cdn.filestackcontent.com/ocLFkfTtRgq3p5QG0unu"),
-        NSURL(string: "https://cdn.filestackcontent.com/ocLFkfTtRgq3p5QG0unu"),
-        NSURL(string: "https://cdn.filestackcontent.com/ocLFkfTtRgq3p5QG0unu"),
-        NSURL(string: "https://cdn.filestackcontent.com/ocLFkfTtRgq3p5QG0unu"),
-        NSURL(string: "https://cdn.filestackcontent.com/ocLFkfTtRgq3p5QG0unu"),
-        NSURL(string: "https://cdn.filestackcontent.com/ocLFkfTtRgq3p5QG0unu"),
-        NSURL(string: "https://cdn.filestackcontent.com/ocLFkfTtRgq3p5QG0unu")
-    ]
+    lazy var vodItems: [VODItem] = ({
+        var vodItems = [VODItem]()
+        
+        for i in 0...10 {
+            let voidItem = VODItem()
+            voidItem.videoUrl = NSURL(string: "https://cdn.filestackcontent.com/ocLFkfTtRgq3p5QG0unu")
+            voidItem.videoThumbnailUrl = NSURL(string: "https://cdn.filestackcontent.com/3p5lj8hdQMW1T6eZHtji")
+            
+            vodItems.append(voidItem)
+        }
+        
+        return vodItems
+    })()
     
     var player = ANPlayerController()
     var currentPlayingIndexPath: NSIndexPath?
@@ -36,14 +39,15 @@ class FeedTableViewTableViewController: UITableViewController
 
     // MARK: - Table view data source
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return videoUrls.count }
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return vodItems.count }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("VideoTableViewCell", forIndexPath: indexPath) as! VideoTableViewCell
+        let vodItem = vodItems[indexPath.row]
         
-        cell.videoThumbnailImageView.sd_setImageWithURL(NSURL(string: "https://cdn.filestackcontent.com/3p5lj8hdQMW1T6eZHtji"))
+        cell.videoThumbnailImageView.sd_setImageWithURL(vodItem.videoThumbnailUrl)
         
         cell.onPlayButtonTappedBlock = { [weak self] (sender) -> Void in
             self?.playVideoAtIndexPath(indexPath)
@@ -96,9 +100,7 @@ class FeedTableViewTableViewController: UITableViewController
             make.right.equalTo(cell.videoContainerView.snp_right)
         }
         
-        let videoUrl = videoUrls[indexPath.row]
-        let vodItem = VODItem()
-        vodItem.contentVideoUrl = videoUrl
+        let vodItem = vodItems[indexPath.row]
         
         currentPlayingIndexPath = indexPath
         

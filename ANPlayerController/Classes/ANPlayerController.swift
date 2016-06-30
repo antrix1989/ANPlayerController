@@ -71,8 +71,8 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         removePlayer()
         resetControlsView()
         
-        if let contentVideoUrl = playable?.contentVideoUrl  {
-            createPlayer(contentVideoUrl)
+        if let videoUrl = playable?.videoUrl  {
+            createPlayer(videoUrl)
         }
         
         if let controlsView = controlsView {
