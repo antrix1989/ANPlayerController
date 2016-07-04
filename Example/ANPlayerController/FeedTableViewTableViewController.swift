@@ -52,6 +52,7 @@ class FeedTableViewTableViewController: UITableViewController
         cell.onPlayButtonTappedBlock = { [weak self] (sender) -> Void in
             self?.playVideoAtIndexPath(indexPath)
             self?.player.setFullscreen(true, animated: true)
+            self?.player.mute(false)
         }
         
         return cell
@@ -106,6 +107,7 @@ class FeedTableViewTableViewController: UITableViewController
         
         player.playable = vodItem
         player.prepare()
+        player.mute(true)
         player.play()
         
         player.onPlayableDidFinishPlayingBlock = { [weak self] (playable) -> Void in

@@ -43,6 +43,11 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     public var onPlayableDidFinishPlayingBlock : ((ANPlayable?) -> Void) = { (playable) -> Void in }
     public var onReadyToPlayBlock : (() -> Void) = { () -> Void in }
     
+    public var volume: Float {
+        get { return player?.volume ?? 0 }
+        set { player?.volume = newValue }
+    }
+    
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     var hideControlsTimer: NSTimer?
@@ -66,10 +71,16 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     // MARK: - Public
     
+    public func mute(mute: Bool)
+    {
+        player?.volume = mute ? 0 : 1
+    }
+    
     public func prepare()
     {
         removePlayer()
         resetControlsView()
+        mute(false)
         
         if let videoUrl = playable?.videoUrl  {
             createPlayer(videoUrl)
