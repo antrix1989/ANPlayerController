@@ -31,7 +31,7 @@
                             </constraints>
                             <state key="normal" image="close_btn"/>
                             <connections>
-                                <action selector="onCloseNotificationButtonTapped:" destination="-1" eventType="touchUpInside" id="vJD-Vy-tNa"/>
+                                <action selector="onCloseButtonTapped:" destination="-1" eventType="touchUpInside" id="Hs3-mf-16c"/>
                             </connections>
                         </button>
                     </subviews>

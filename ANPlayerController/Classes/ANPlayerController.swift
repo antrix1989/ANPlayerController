@@ -41,6 +41,7 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     public var activityIndicatorView: UIActivityIndicatorView?
     
     public var onPlayableDidFinishPlayingBlock : ((ANPlayable?) -> Void) = { (playable) -> Void in }
+    public var onViewTappedBlock : (() -> Void) = { () -> Void in }
     public var onReadyToPlayBlock : (() -> Void) = { () -> Void in }
     
     public var volume: Float {
@@ -48,12 +49,15 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         set { player?.volume = newValue }
     }
     
+    public var isFullScreen = false
+    
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     var hideControlsTimer: NSTimer?
     var restoreAfterScrubbingRate: Float = 0
     var playbackTimeObserver: AnyObject?
     var tapRecognizer: UITapGestureRecognizer?
+    var fullScreenViewController: ANFullScreenViewController?
     
     private var playerKVOContext = 0
     
@@ -112,19 +116,34 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     public func setFullscreen(fullscreen: Bool, animated: Bool)
     {
-        view.removeFromSuperview()
-        let fullScreenViewController = ANFullScreenViewController()
-        fullScreenViewController.player = self
-        let _ = fullScreenViewController.view // Load view.
-        fullScreenViewController.fullScreenView.playerContainerView.addSubview(view)
-        view.snp_makeConstraints { (make) in
-            make.top.equalTo(fullScreenViewController.fullScreenView.playerContainerView.snp_top)
-            make.bottom.equalTo(fullScreenViewController.fullScreenView.playerContainerView.snp_bottom)
-            make.left.equalTo(fullScreenViewController.fullScreenView.playerContainerView.snp_left)
-            make.right.equalTo(fullScreenViewController.fullScreenView.playerContainerView.snp_right)
+        func closeFullScreenController()
+        {
+            stop()
+            fullScreenViewController?.dismissViewControllerAnimated(true, completion: { self.isFullScreen = false; })
         }
         
-        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(fullScreenViewController, animated: animated, completion: nil)
+        if fullscreen {
+            view.removeFromSuperview()
+            fullScreenViewController = ANFullScreenViewController()
+            fullScreenViewController!.player = self
+            let _ = fullScreenViewController!.view // Load view.
+            fullScreenViewController!.fullScreenView.playerContainerView.addSubview(view)
+            view.snp_makeConstraints { (make) in
+                make.top.equalTo(self.fullScreenViewController!.fullScreenView.playerContainerView.snp_top)
+                make.bottom.equalTo(self.fullScreenViewController!.fullScreenView.playerContainerView.snp_bottom)
+                make.left.equalTo(self.fullScreenViewController!.fullScreenView.playerContainerView.snp_left)
+                make.right.equalTo(self.fullScreenViewController!.fullScreenView.playerContainerView.snp_right)
+            }
+            
+            fullScreenViewController!.onCloseButtonTapped = { () -> Void in
+                closeFullScreenController()
+            }
+            
+            isFullScreen = true
+            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(fullScreenViewController!, animated: animated, completion: nil)
+        } else {
+            closeFullScreenController()
+        }
     }
     
     // MARK: - ANMediaPlayback
@@ -280,11 +299,6 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
             
             let currentTimeTotalSeconds = CMTimeGetSeconds(time)
             self?.controlsView?.seekSlider?.value = Float(currentTimeTotalSeconds)
-            
-            if let weakSelf = self, let controlsView = weakSelf.controlsView
-                where weakSelf.hideControlsTimer == nil && !controlsView.hidden {
-                self?.hideControlsView(true, afterInterval: weakSelf.hidingControlsInterval)
-            }
         })
     }
     
@@ -319,8 +333,12 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     func onTapGesture(recognizer: UITapGestureRecognizer)
     {
+        onViewTappedBlock()
         controlsView?.hidden = false
         stopHideControllsTimer()
+        if let controlsView = controlsView where hideControlsTimer == nil && !controlsView.hidden {
+            hideControlsView(true, afterInterval: hidingControlsInterval)
+        }
     }
     
     // MARK: - UIGestureRecognizerDelegate

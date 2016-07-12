@@ -13,6 +13,8 @@ class ANFullScreenViewController: UIViewController
     @IBOutlet var fullScreenView: ANFullScreenView!
     var player: ANPlayerController?
     
+    var onCloseButtonTapped : (() -> Void) = { () -> Void in }
+    
     init()
     {
         super.init(nibName: "ANFullScreenViewController", bundle: NSBundle(forClass: self.dynamicType))
@@ -25,9 +27,8 @@ class ANFullScreenViewController: UIViewController
     
     // MARK: - IBAction
     
-    @IBAction func onCloseNotificationButtonTapped(sender: AnyObject)
+    @IBAction func onCloseButtonTapped(sender: AnyObject)
     {
-        player?.stop()
-        dismissViewControllerAnimated(true, completion: nil)
+        onCloseButtonTapped()
     }
 }

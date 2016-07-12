@@ -35,6 +35,13 @@ class FeedTableViewTableViewController: UITableViewController
         super.viewDidLoad()
         
         player.controlsView = ANPlayerControlsView.createFromNib()
+        
+        player.onViewTappedBlock = { [weak self] () -> Void in
+            if let weakSelf = self where !weakSelf.player.isFullScreen {
+                weakSelf.player.setFullscreen(true, animated: true)
+                weakSelf.player.mute(false)
+            }
+        }
     }
 
     // MARK: - Table view data source
