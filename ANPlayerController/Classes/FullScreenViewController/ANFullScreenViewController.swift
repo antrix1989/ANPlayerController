@@ -25,6 +25,8 @@ class ANFullScreenViewController: UIViewController
         super.init(coder: aDecoder)
     }
     
+    override func prefersStatusBarHidden() -> Bool { return true }
+    
     // MARK: - IBAction
     
     @IBAction func onCloseButtonTapped(sender: AnyObject)
