@@ -51,6 +51,8 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     public var isFullScreen = false
     
+    public var isPlaying: Bool = false { willSet { self.willChangeValueForKey("isPlaying") } didSet { self.didChangeValueForKey("isPlaying") } }
+    
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     var hideControlsTimer: NSTimer?
@@ -155,6 +157,8 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         activityIndicatorView?.startAnimating()
         addPlaybackTimeObserver()
         player?.play()
+        
+        isPlaying = true
     }
     
     public func pause()
@@ -165,6 +169,8 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         controlsView?.hidden = false
         
         player?.pause()
+        
+        isPlaying = false
     }
     
     public func stop()
@@ -174,6 +180,8 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         resetControlsView()
         
         onPlayableDidFinishPlayingBlock(playable)
+        
+        isPlaying = false
     }
     
     public func seekToTime(time: NSTimeInterval)
