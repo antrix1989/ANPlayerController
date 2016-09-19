@@ -10,14 +10,14 @@ import UIKit
 import AVFoundation
 import SnapKit
 
-public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaPlayback
+open class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaPlayback
 {
-    public var playable: ANPlayable?
+    open var playable: ANPlayable?
     
     /// The player view.
-    public lazy var view: UIView = ({
+    open lazy var view: UIView = ({
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 160))
-        view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor.black
         if let activityIndicatorView = self.activityIndicatorView {
             activityIndicatorView.hidesWhenStopped = true
             view.addSubview(activityIndicatorView)
@@ -32,36 +32,36 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     })()
     
     /// A view that confiorms to the <code>ANPlayerControls</code> protocol.
-    public var controlsView: ANPlayerControlsView?
+    open var controlsView: ANPlayerControlsView?
     
     /// Hide controls after interval.
-    public var hidingControlsInterval: NSTimeInterval = 3
+    open var hidingControlsInterval: TimeInterval = 3
     
     /// Video loading indciator view.
-    public var activityIndicatorView: UIActivityIndicatorView?
+    open var activityIndicatorView: UIActivityIndicatorView?
     
-    public var onPlayableDidFinishPlayingBlock : ((ANPlayable?) -> Void) = { (playable) -> Void in }
-    public var onViewTappedBlock : (() -> Void) = { () -> Void in }
-    public var onReadyToPlayBlock : (() -> Void) = { () -> Void in }
+    open var onPlayableDidFinishPlayingBlock : ((ANPlayable?) -> Void) = { (playable) -> Void in }
+    open var onViewTappedBlock : (() -> Void) = { () -> Void in }
+    open var onReadyToPlayBlock : (() -> Void) = { () -> Void in }
     
-    public var volume: Float {
+    open var volume: Float {
         get { return player?.volume ?? 0 }
         set { player?.volume = newValue }
     }
     
-    public var isFullScreen = false
+    open var isFullScreen = false
     
-    public var isPlaying: Bool = false { willSet { self.willChangeValueForKey("isPlaying") } didSet { self.didChangeValueForKey("isPlaying") } }
+    open var isPlaying: Bool = false { willSet { self.willChangeValue(forKey: "isPlaying") } didSet { self.didChangeValue(forKey: "isPlaying") } }
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
-    var hideControlsTimer: NSTimer?
+    var hideControlsTimer: Timer?
     var restoreAfterScrubbingRate: Float = 0
     var playbackTimeObserver: AnyObject?
     var tapRecognizer: UITapGestureRecognizer?
     var fullScreenViewController: ANFullScreenViewController?
     
-    private var playerKVOContext = 0
+    fileprivate var playerKVOContext = 0
     
     public override init()
     {
@@ -77,19 +77,19 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     // MARK: - Public
     
-    public func mute(mute: Bool)
+    open func mute(_ mute: Bool)
     {
         player?.volume = mute ? 0 : 1
     }
     
-    public func prepare()
+    open func prepare()
     {
         removePlayer()
         resetControlsView()
         mute(false)
         
         if let videoUrl = playable?.videoUrl  {
-            createPlayer(videoUrl)
+            createPlayer(videoUrl as URL)
         }
         
         if let controlsView = controlsView {
@@ -102,26 +102,26 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
                 make.right.equalTo(view.snp_right)
             }
             
-            controlsView.state = .Pause
-            controlsView.hidden = true
+            controlsView.state = .pause
+            controlsView.isHidden = true
             
-            controlsView.playButton?.addTarget(self, action: #selector(onPlayButtonTapped(_:)), forControlEvents: .TouchUpInside)
-            controlsView.pauseButton?.addTarget(self, action: #selector(onPauseButtonTapped(_:)), forControlEvents: .TouchUpInside)
-            controlsView.seekSlider?.addTarget(self, action: #selector(onScrub(_:)), forControlEvents: .ValueChanged)
-            controlsView.seekSlider?.addTarget(self, action: #selector(onBeginScrubbing(_:)), forControlEvents: .TouchDown)
-            controlsView.seekSlider?.addTarget(self, action: #selector(onEndScrubbing(_:)), forControlEvents: .TouchUpInside)
-            controlsView.seekSlider?.addTarget(self, action: #selector(onEndScrubbing(_:)), forControlEvents: .TouchUpOutside)
+            controlsView.playButton?.addTarget(self, action: #selector(onPlayButtonTapped(_:)), for: .touchUpInside)
+            controlsView.pauseButton?.addTarget(self, action: #selector(onPauseButtonTapped(_:)), for: .touchUpInside)
+            controlsView.seekSlider?.addTarget(self, action: #selector(onScrub(_:)), for: .valueChanged)
+            controlsView.seekSlider?.addTarget(self, action: #selector(onBeginScrubbing(_:)), for: .touchDown)
+            controlsView.seekSlider?.addTarget(self, action: #selector(onEndScrubbing(_:)), for: .touchUpInside)
+            controlsView.seekSlider?.addTarget(self, action: #selector(onEndScrubbing(_:)), for: .touchUpOutside)
         }
         
         addTapGestureRecognizer()
     }
     
-    public func setFullscreen(fullscreen: Bool, animated: Bool)
+    open func setFullscreen(_ fullscreen: Bool, animated: Bool)
     {
         func closeFullScreenController()
         {
             stop()
-            fullScreenViewController?.dismissViewControllerAnimated(true, completion: { self.isFullScreen = false; })
+            fullScreenViewController?.dismiss(animated: true, completion: { self.isFullScreen = false; })
         }
         
         if fullscreen {
@@ -142,7 +142,7 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
             }
             
             isFullScreen = true
-            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(fullScreenViewController!, animated: animated, completion: nil)
+            UIApplication.shared.keyWindow?.rootViewController?.present(fullScreenViewController!, animated: animated, completion: nil)
         } else {
             closeFullScreenController()
         }
@@ -150,9 +150,9 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     // MARK: - ANMediaPlayback
     
-    public func play()
+    open func play()
     {
-        controlsView?.state = .Play
+        controlsView?.state = .play
         
         activityIndicatorView?.startAnimating()
         addPlaybackTimeObserver()
@@ -161,19 +161,19 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         isPlaying = true
     }
     
-    public func pause()
+    open func pause()
     {
         stopHideControllsTimer()
         
-        controlsView?.state = .Pause
-        controlsView?.hidden = false
+        controlsView?.state = .pause
+        controlsView?.isHidden = false
         
         player?.pause()
         
         isPlaying = false
     }
     
-    public func stop()
+    open func stop()
     {
         player?.pause()
         seekToTime(0)
@@ -184,26 +184,26 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         isPlaying = false
     }
     
-    public func seekToTime(time: NSTimeInterval)
+    open func seekToTime(_ time: TimeInterval)
     {
-        player?.seekToTime(CMTimeMakeWithSeconds(time, Int32(NSEC_PER_SEC)))
+        player?.seek(to: CMTimeMakeWithSeconds(time, Int32(NSEC_PER_SEC)))
     }
     
     // MARK: - KVO
     
-    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>)
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?)
     {
         if context != &playerKVOContext {
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
             return
         }
         
-        if let player = object as? AVPlayer where player == self.player && keyPath == "status" {
+        if let player = object as? AVPlayer , player == self.player && keyPath == "status" {
             activityIndicatorView?.stopAnimating()
             
-            if player.status == .Failed {
+            if player.status == .failed {
                 debugPrint(player.error)
-            } else if player.status == .ReadyToPlay {
+            } else if player.status == .readyToPlay {
                 onReadyToPlayBlock()
             }
             
@@ -215,15 +215,15 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     
     // MARK: - Protected
     
-    func onItemDidFinishPlayingNotification(notification: NSNotification)
+    func onItemDidFinishPlayingNotification(_ notification: Notification)
     {
         stop()
     }
     
-    func createPlayer(contentVideoUrl: NSURL)
+    func createPlayer(_ contentVideoUrl: URL)
     {
-        let playerItem = AVPlayerItem(URL: contentVideoUrl)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onItemDidFinishPlayingNotification(_:)), name: AVPlayerItemDidPlayToEndTimeNotification, object: playerItem)
+        let playerItem = AVPlayerItem(url: contentVideoUrl)
+        NotificationCenter.default.addObserver(self, selector: #selector(onItemDidFinishPlayingNotification(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
         
         player = AVPlayer(playerItem: playerItem)
         player!.addObserver(self, forKeyPath: "status", options: [], context: &playerKVOContext)
@@ -238,7 +238,7 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
     func removePlayer()
     {
         if let playerItem = player?.currentItem {
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: AVPlayerItemDidPlayToEndTimeNotification, object: playerItem)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
         }
         
         player?.removeObserver(self, forKeyPath: "status")
@@ -249,14 +249,14 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         removePlaybackTimeObserver()
     }
     
-    func minutes(totalSeconds: Double) -> Int { return Int(floor(totalSeconds % 3600 / 60)) }
+    func minutes(_ totalSeconds: Double) -> Int { return Int(floor(totalSeconds.truncatingRemainder(dividingBy: 3600) / 60)) }
     
-    func seconds(totalSeconds: Double) -> Int { return Int(floor(totalSeconds % 3600 % 60)) }
+    func seconds(_ totalSeconds: Double) -> Int { return Int(floor(totalSeconds.truncatingRemainder(dividingBy: 3600).truncatingRemainder(dividingBy: 60))) }
     
     func resetControlsView()
     {
         setCurrentTimeLabelValue(kCMTimeZero)
-        controlsView?.state = .Pause
+        controlsView?.state = .pause
         controlsView?.seekSlider?.minimumValue = 0
         controlsView?.seekSlider?.maximumValue = 0
         controlsView?.seekSlider?.value = 0
@@ -288,7 +288,7 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         }
     }
     
-    func setCurrentTimeLabelValue(time: CMTime)
+    func setCurrentTimeLabelValue(_ time: CMTime)
     {
         let currentTimeTotalSeconds = CMTimeGetSeconds(time)
         
@@ -300,20 +300,20 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         if let _ = playbackTimeObserver { return }
         
         let interval = CMTimeMakeWithSeconds(1.0, Int32(NSEC_PER_SEC)) // 1 second
-        playbackTimeObserver = player?.addPeriodicTimeObserverForInterval(interval, queue: nil, usingBlock: { [weak self] (time) in
-            if let rate = self?.player?.rate where rate == 0 { return }
+        playbackTimeObserver = player?.addPeriodicTimeObserver(forInterval: interval, queue: nil, using: { [weak self] (time) in
+            if let rate = self?.player?.rate , rate == 0 { return }
             
             self?.setCurrentTimeLabelValue(time)
             
             let currentTimeTotalSeconds = CMTimeGetSeconds(time)
             self?.controlsView?.seekSlider?.value = Float(currentTimeTotalSeconds)
-        })
+        }) as AnyObject?
     }
     
-    func hideControlsView(hide: Bool, afterInterval interval: NSTimeInterval)
+    func hideControlsView(_ hide: Bool, afterInterval interval: TimeInterval)
     {
-        hideControlsTimer = NSTimer.schedule(delay: interval) { [weak self] (timer) in
-            self?.controlsView?.hidden = hide
+        hideControlsTimer = Timer.schedule(delay: interval) { [weak self] (timer) in
+            self?.controlsView?.isHidden = hide
             self?.hideControlsTimer?.invalidate()
             self?.hideControlsTimer = nil
         }
@@ -339,38 +339,38 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         view.addGestureRecognizer(tapRecognizer!)
     }
     
-    func onTapGesture(recognizer: UITapGestureRecognizer)
+    func onTapGesture(_ recognizer: UITapGestureRecognizer)
     {
         onViewTappedBlock()
-        controlsView?.hidden = false
+        controlsView?.isHidden = false
         stopHideControllsTimer()
-        if let controlsView = controlsView where hideControlsTimer == nil && !controlsView.hidden {
+        if let controlsView = controlsView , hideControlsTimer == nil && !controlsView.isHidden {
             hideControlsView(true, afterInterval: hidingControlsInterval)
         }
     }
     
     // MARK: - UIGestureRecognizerDelegate
     
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool
+    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool
     {
         return view == touch.view
     }
     
     // MARK: - IBAction
     
-    @IBAction func onPlayButtonTapped(sender: AnyObject)
+    @IBAction func onPlayButtonTapped(_ sender: AnyObject)
     {
         play()
     }
     
-    @IBAction func onPauseButtonTapped(sender: AnyObject)
+    @IBAction func onPauseButtonTapped(_ sender: AnyObject)
     {
         pause()
     }
     
     /// User is dragging the movie controller thumb to scrub through the movie.
     
-    @IBAction func onBeginScrubbing(slider: UISlider)
+    @IBAction func onBeginScrubbing(_ slider: UISlider)
     {
         stopHideControllsTimer()
         
@@ -382,18 +382,18 @@ public class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaP
         removePlaybackTimeObserver()
     }
     
-    @IBAction func onScrub(slider: UISlider)
+    @IBAction func onScrub(_ slider: UISlider)
     {
-        if let playerDuration = player?.currentItem?.asset.duration where CMTIME_IS_INVALID(playerDuration) { return }
+        if let playerDuration = player?.currentItem?.asset.duration , CMTIME_IS_INVALID(playerDuration) { return }
         
         if let timeScale = player?.currentItem?.asset.duration.timescale {
             let time = CMTimeMakeWithSeconds(Float64(slider.value), timeScale)
-            player?.seekToTime(time)
+            player?.seek(to: time)
             setCurrentTimeLabelValue(time)
         }
     }
     
-    @IBAction func onEndScrubbing(slider: UISlider)
+    @IBAction func onEndScrubbing(_ slider: UISlider)
     {
         if restoreAfterScrubbingRate != 0 {
             player?.rate = restoreAfterScrubbingRate

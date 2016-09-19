@@ -22,7 +22,7 @@
   "resources": "ANPlayerController/Assets/ANPlayerImages.xcassets",
   "dependencies": {
     "SnapKit": [
-      "~> 0.21"
+      ">= 3.0.0"
     ]
   }
 }

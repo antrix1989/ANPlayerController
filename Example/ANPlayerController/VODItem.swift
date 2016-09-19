@@ -13,7 +13,7 @@ class VODItem: NSObject, ANPlayable
 {
     // MARK: - ANPlayable
     
-    var videoUrl: NSURL?
+    var videoUrl: URL?
     
-    var videoThumbnailUrl: NSURL?
+    var videoThumbnailUrl: URL?
 }

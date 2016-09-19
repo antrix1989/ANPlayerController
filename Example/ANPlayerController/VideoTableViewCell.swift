@@ -18,13 +18,13 @@ class VideoTableViewCell: UITableViewCell
     
     var onPlayButtonTappedBlock : ((AnyObject) -> Void) = { (sender) -> Void in }
     
-    func showVideoView(show: Bool)
+    func showVideoView(_ show: Bool)
     {
-        videoContainerView.hidden = !show
-        videoThumnailContainerView.hidden = !videoContainerView.hidden
+        videoContainerView.isHidden = !show
+        videoThumnailContainerView.isHidden = !videoContainerView.isHidden
     }
     
-    func showLoadingAnimation(show: Bool)
+    func showLoadingAnimation(_ show: Bool)
     {
         if show {
             activityIndicatorView.startAnimating()
@@ -32,12 +32,12 @@ class VideoTableViewCell: UITableViewCell
             activityIndicatorView.stopAnimating()
         }
         
-        playButton.hidden = show
+        playButton.isHidden = show
     }
     
     // MARK: - IBAction
     
-    @IBAction func onPlayButtonTapped(sender: AnyObject)
+    @IBAction func onPlayButtonTapped(_ sender: AnyObject)
     {
         onPlayButtonTappedBlock(sender)
     }

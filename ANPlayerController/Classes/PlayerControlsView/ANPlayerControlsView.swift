@@ -10,46 +10,46 @@ import UIKit
 
 enum ANPlayerControlsViewState
 {
-    case Pause
-    case Play
+    case pause
+    case play
 }
 
-public class ANPlayerControlsView: UIView, UIGestureRecognizerDelegate
+open class ANPlayerControlsView: UIView, UIGestureRecognizerDelegate
 {
-    @IBOutlet weak public var playButton: UIButton?
-    @IBOutlet weak public var pauseButton: UIButton?
-    @IBOutlet weak public var stopButton: UIButton?
-    @IBOutlet weak public var backButton: UIButton?
-    @IBOutlet weak public var forwardButton: UIButton?
-    @IBOutlet weak public var seekSlider: UISlider?
-    @IBOutlet weak public var currentTimeLabel: UILabel?
-    @IBOutlet weak public var totalTimeLabel: UILabel?
-    @IBOutlet weak public var controlsView: UIView?
+    @IBOutlet weak open var playButton: UIButton?
+    @IBOutlet weak open var pauseButton: UIButton?
+    @IBOutlet weak open var stopButton: UIButton?
+    @IBOutlet weak open var backButton: UIButton?
+    @IBOutlet weak open var forwardButton: UIButton?
+    @IBOutlet weak open var seekSlider: UISlider?
+    @IBOutlet weak open var currentTimeLabel: UILabel?
+    @IBOutlet weak open var totalTimeLabel: UILabel?
+    @IBOutlet weak open var controlsView: UIView?
     
-    var state: ANPlayerControlsViewState = .Pause {
+    var state: ANPlayerControlsViewState = .pause {
         didSet {
             switch state {
-            case .Play:
-                pauseButton?.hidden = false
-                playButton?.hidden = true
+            case .play:
+                pauseButton?.isHidden = false
+                playButton?.isHidden = true
             default:
-                pauseButton?.hidden = true
-                playButton?.hidden = false
+                pauseButton?.isHidden = true
+                playButton?.isHidden = false
             }
         }
     }
     
-    public override func awakeFromNib()
+    open override func awakeFromNib()
     {
         super.awakeFromNib()
         
-        state = .Pause
+        state = .pause
         
-        let minTrackImage = UIImage(named: "min_slide_track", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection: nil)?.stretchableImageWithLeftCapWidth(10, topCapHeight: 0)
-        let maxTrackImage = UIImage(named: "max_slide_track", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection: nil)?.stretchableImageWithLeftCapWidth(10, topCapHeight: 0)
+        let minTrackImage = UIImage(named: "min_slide_track", in: Bundle(for: type(of: self)), compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 10, topCapHeight: 0)
+        let maxTrackImage = UIImage(named: "max_slide_track", in: Bundle(for: type(of: self)), compatibleWith: nil)?.stretchableImage(withLeftCapWidth: 10, topCapHeight: 0)
         
-        seekSlider?.setThumbImage(UIImage(named: "slide_thumb", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection: nil), forState: .Normal)
-        seekSlider?.setMinimumTrackImage(minTrackImage, forState: .Normal)
-        seekSlider?.setMaximumTrackImage(maxTrackImage, forState: .Normal)
+        seekSlider?.setThumbImage(UIImage(named: "slide_thumb", in: Bundle(for: type(of: self)), compatibleWith: nil), for: UIControlState())
+        seekSlider?.setMinimumTrackImage(minTrackImage, for: UIControlState())
+        seekSlider?.setMaximumTrackImage(maxTrackImage, for: UIControlState())
     }
 }

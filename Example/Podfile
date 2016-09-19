@@ -3,7 +3,7 @@ use_frameworks!
 
 target 'ANPlayerController_Example' do
   pod 'ANPlayerController', :path => '../'
-  pod 'SnapKit'
+  pod 'SnapKit', '>= 3.0.0'
   pod 'SDWebImage'
 
   target 'ANPlayerController_Tests' do

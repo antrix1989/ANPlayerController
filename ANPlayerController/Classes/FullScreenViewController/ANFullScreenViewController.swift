@@ -17,7 +17,7 @@ class ANFullScreenViewController: UIViewController
     
     init()
     {
-        super.init(nibName: "ANFullScreenViewController", bundle: NSBundle(forClass: self.dynamicType))
+        super.init(nibName: "ANFullScreenViewController", bundle: Bundle(for: type(of: self)))
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -25,11 +25,11 @@ class ANFullScreenViewController: UIViewController
         super.init(coder: aDecoder)
     }
     
-    override func prefersStatusBarHidden() -> Bool { return true }
+    override var prefersStatusBarHidden : Bool { return true }
     
     // MARK: - IBAction
     
-    @IBAction func onCloseButtonTapped(sender: AnyObject)
+    @IBAction func onCloseButtonTapped(_ sender: AnyObject)
     {
         onCloseButtonTapped()
     }

@@ -10,7 +10,7 @@ import Foundation
 
 public protocol ANPlayable
 {
-    var videoUrl: NSURL? { get }
+    var videoUrl: URL? { get }
     
-    var videoThumbnailUrl: NSURL? { get }
+    var videoThumbnailUrl: URL? { get }
 }

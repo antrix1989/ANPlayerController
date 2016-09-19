@@ -22,5 +22,5 @@ protocol ANMediaPlayback
     func stop()
     
     /// Seek to a given time.
-    func seekToTime(time: NSTimeInterval)
+    func seekToTime(_ time: TimeInterval)
 }

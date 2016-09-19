@@ -18,8 +18,8 @@ class FeedTableViewTableViewController: UITableViewController
         
         for i in 0...10 {
             let voidItem = VODItem()
-            voidItem.videoUrl = NSURL(string: "https://cdn.filestackcontent.com/ocLFkfTtRgq3p5QG0unu")
-            voidItem.videoThumbnailUrl = NSURL(string: "https://cdn.filestackcontent.com/3p5lj8hdQMW1T6eZHtji")
+            voidItem.videoUrl = URL(string: "https://cdn.filestackcontent.com/ocLFkfTtRgq3p5QG0unu")
+            voidItem.videoThumbnailUrl = URL(string: "https://cdn.filestackcontent.com/3p5lj8hdQMW1T6eZHtji")
             
             vodItems.append(voidItem)
         }
@@ -28,7 +28,7 @@ class FeedTableViewTableViewController: UITableViewController
     })()
     
     var player = ANPlayerController()
-    var currentPlayingIndexPath: NSIndexPath?
+    var currentPlayingIndexPath: IndexPath?
     
     override func viewDidLoad()
     {
@@ -37,7 +37,7 @@ class FeedTableViewTableViewController: UITableViewController
         player.controlsView = ANPlayerControlsView.createFromNib()
         
         player.onViewTappedBlock = { [weak self] () -> Void in
-            if let weakSelf = self where !weakSelf.player.isFullScreen {
+            if let weakSelf = self , !weakSelf.player.isFullScreen {
                 weakSelf.player.setFullscreen(true, animated: true)
                 weakSelf.player.mute(false)
             }
@@ -46,15 +46,15 @@ class FeedTableViewTableViewController: UITableViewController
 
     // MARK: - Table view data source
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return vodItems.count }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return vodItems.count }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("VideoTableViewCell", forIndexPath: indexPath) as! VideoTableViewCell
-        let vodItem = vodItems[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "VideoTableViewCell", for: indexPath) as! VideoTableViewCell
+        let vodItem = vodItems[(indexPath as NSIndexPath).row]
         
-        cell.videoThumbnailImageView.sd_setImageWithURL(vodItem.videoThumbnailUrl)
+        cell.videoThumbnailImageView.sd_setImage(with: vodItem.videoThumbnailUrl as URL!)
         
         cell.onPlayButtonTappedBlock = { [weak self] (sender) -> Void in
             self?.playVideoAtIndexPath(indexPath)
@@ -65,32 +65,32 @@ class FeedTableViewTableViewController: UITableViewController
         return cell
     }
     
-    override func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
-        if let currentPlayingIndexPath = self.currentPlayingIndexPath where currentPlayingIndexPath == indexPath {
+        if let currentPlayingIndexPath = self.currentPlayingIndexPath , currentPlayingIndexPath == indexPath {
             player.stop()
         }
     }
     
     // MARK: - UIScrollViewDelegate
     
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView)
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
     {
         onScrollViewEndScrolling()
     }
     
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
     {
         if !decelerate { onScrollViewEndScrolling() }
     }
     
     // MARK: - Private
     
-    private func playVideoAtIndexPath(indexPath: NSIndexPath)
+    fileprivate func playVideoAtIndexPath(_ indexPath: IndexPath)
     {
-        if let currentPlayingIndexPath = currentPlayingIndexPath where indexPath == currentPlayingIndexPath { return }
+        if let currentPlayingIndexPath = currentPlayingIndexPath , indexPath == currentPlayingIndexPath { return }
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoTableViewCell
+        let cell = tableView.cellForRow(at: indexPath) as! VideoTableViewCell
         cell.showLoadingAnimation(true)
         
         player.onReadyToPlayBlock = { () -> Void in
@@ -101,14 +101,14 @@ class FeedTableViewTableViewController: UITableViewController
         player.stop()
         player.view.removeFromSuperview()
         cell.videoContainerView.addSubview(player.view)
-        player.view.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(cell.videoContainerView.snp_top)
-            make.bottom.equalTo(cell.videoContainerView.snp_bottom)
-            make.left.equalTo(cell.videoContainerView.snp_left)
-            make.right.equalTo(cell.videoContainerView.snp_right)
+        player.view.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(cell.videoContainerView.snp.top)
+            make.bottom.equalTo(cell.videoContainerView.snp.bottom)
+            make.left.equalTo(cell.videoContainerView.snp.left)
+            make.right.equalTo(cell.videoContainerView.snp.right)
         }
         
-        let vodItem = vodItems[indexPath.row]
+        let vodItem = vodItems[(indexPath as NSIndexPath).row]
         
         currentPlayingIndexPath = indexPath
         
@@ -118,7 +118,7 @@ class FeedTableViewTableViewController: UITableViewController
         player.play()
         
         player.onPlayableDidFinishPlayingBlock = { [weak self] (playable) -> Void in
-            if let weakSelf = self, let cell = weakSelf.tableView.cellForRowAtIndexPath(indexPath) as? VideoTableViewCell {
+            if let weakSelf = self, let cell = weakSelf.tableView.cellForRow(at: indexPath) as? VideoTableViewCell {
                 cell.showVideoView(false)
                 weakSelf.player.view.removeFromSuperview()
                 weakSelf.currentPlayingIndexPath = nil
@@ -126,32 +126,32 @@ class FeedTableViewTableViewController: UITableViewController
         }
     }
     
-    private func stopVideoPlayingAtIndexPath(indexPath: NSIndexPath)
+    fileprivate func stopVideoPlayingAtIndexPath(_ indexPath: IndexPath)
     {
-        if let currentPlayingIndexPath = self.currentPlayingIndexPath where currentPlayingIndexPath == indexPath {
+        if let currentPlayingIndexPath = self.currentPlayingIndexPath , currentPlayingIndexPath == indexPath {
             player.stop()
         }
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoTableViewCell
+        let cell = tableView.cellForRow(at: indexPath) as! VideoTableViewCell
         cell.showVideoView(false)
     }
     
-    private func onScrollViewEndScrolling()
+    fileprivate func onScrollViewEndScrolling()
     {
         var isPlayingCellFound = false
         for cell in tableView.visibleCells {
-            if let indexPath = tableView.indexPathForCell(cell) {
+            if let indexPath = tableView.indexPath(for: cell) {
                 if isPlayingCellFound {
                     stopVideoPlayingAtIndexPath(indexPath)
                     continue
                 }
                 
-                let rectInTableView = tableView.rectForRowAtIndexPath(indexPath)
-                let rectInSuperview = tableView.convertRect(rectInTableView, toView: tableView.superview)
+                let rectInTableView = tableView.rectForRow(at: indexPath)
+                let rectInSuperview = tableView.convert(rectInTableView, to: tableView.superview)
                 
-                let intersection = CGRectIntersection(tableView.frame, rectInSuperview)
-                let visibleHeight = CGRectGetHeight(intersection)
-                let cellHeigt = CGRectGetHeight(rectInTableView)
+                let intersection = tableView.frame.intersection(rectInSuperview)
+                let visibleHeight = intersection.height
+                let cellHeigt = rectInTableView.height
                 let navigationBarHeight = navigationController?.navigationBar.bounds.height ?? 0
                 if visibleHeight - navigationBarHeight > cellHeigt * 0.6 {
                     isPlayingCellFound = true
