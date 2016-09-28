@@ -179,8 +179,6 @@ open class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaPla
         seekToTime(0)
         resetControlsView()
         
-        onPlayableDidFinishPlayingBlock(playable)
-        
         isPlaying = false
     }
     
@@ -217,7 +215,7 @@ open class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaPla
     
     func onItemDidFinishPlayingNotification(_ notification: Notification)
     {
-        stop()
+        onPlayableDidFinishPlayingBlock(playable)
     }
     
     func createPlayer(_ contentVideoUrl: URL)
