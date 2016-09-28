@@ -215,7 +215,8 @@ open class ANPlayerController: NSObject, UIGestureRecognizerDelegate, ANMediaPla
     
     func onItemDidFinishPlayingNotification(_ notification: Notification)
     {
-        onPlayableDidFinishPlayingBlock(playable)
+        player?.currentItem?.seek(to: kCMTimeZero)
+        player?.play()
     }
     
     func createPlayer(_ contentVideoUrl: URL)
